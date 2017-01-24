@@ -18,6 +18,6 @@ get '/contacts' do
   erb :contacts
 end
 
-get '/contact/new' do
+get '/new_contact' do
   erb :new_contact
 end
