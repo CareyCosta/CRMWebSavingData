@@ -1,0 +1,40 @@
+* {
+  font-family: sans-serif;
+  box-sizing: border-box;
+}
+
+header {
+  text-align: center;
+  color: white;
+}
+
+h1 {
+  background-color: black;
+  padding: 7px;
+  margin: 0px;
+}
+
+.nav li {
+  background-color: gray;
+  padding: 5px;
+  margin-bottom: 1px;
+}
+
+p{
+  background-color: rgb(245, 121, 97);
+  padding: 5px;
+}
+
+.all_contacts li {
+  list-style: none;
+  background-color: rgb(18, 221, 201);
+  padding: 5px;
+  margin-top: 2px;
+}
+
+.bitmaker {
+  color: white;
+  background-color: black;
+  text-align: center;
+  padding: 5px 0px 5px 0px;
+}

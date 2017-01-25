@@ -5,12 +5,14 @@
 require_relative 'contact'
 require 'sinatra'
 
-#Contact.create('Mark', 'Zuckerberg', 'mark@facebook.com', 'CEO')
-#Contact.create('Sergey', 'Brin', 'sergey@google.com', 'Co-Founder')
-#Contact.create('Steve', 'Jobs', 'steve@apple.com', 'Visionary')
+Contact.create('Marty', 'McFly', 'marty@mcfly.com', '')
+Contact.create('George', 'McFly', 'george@mcfly.com', '')
+Contact.create('Lorraine', 'McFly', 'lorraine@mcfly.com', '')
+Contact.create('Biff', 'Tannen', 'biff@tannen.com', '')
+Contact.create('Doc', 'Brown', 'doc@brown.com', '')
 
 get '/' do
-  @crm_app_name = "Carey's CRM"
+  @crm_app_name = "Bitmaker CRM"
   erb :index
 end
 
@@ -22,7 +24,15 @@ get '/new_contact' do
   erb :new_contact
 end
 
+patch 'new_contact' do
+  erb :new_contact
+end
+
+delete '/contacts' do
+  erb :index
+end
+
 post '/contacts' do
   Contact.create(params[:first_name], params[:last_name], params[:email], params[:note])
-  redirect to('/contacts')
+  redirect to('/')
 end
