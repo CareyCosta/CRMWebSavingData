@@ -24,15 +24,12 @@ get '/new_contact' do
   erb :new_contact
 end
 
-patch 'new_contact' do
-  erb :new_contact
-end
-
-delete '/contacts' do
-  erb :index
-end
-
 post '/contacts' do
   Contact.create(params[:first_name], params[:last_name], params[:email], params[:note])
   redirect to('/')
+end
+
+get '/contacts/1' do
+  @contact = Contact.find(1)
+  erb :show_contact
 end
