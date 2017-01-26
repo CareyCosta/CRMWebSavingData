@@ -5,11 +5,12 @@
 require_relative 'contact'
 require 'sinatra'
 
-Contact.create('Marty', 'McFly', 'marty@mcfly.com', '')
-Contact.create('George', 'McFly', 'george@mcfly.com', '')
-Contact.create('Lorraine', 'McFly', 'lorraine@mcfly.com', '')
-Contact.create('Biff', 'Tannen', 'biff@tannen.com', '')
-Contact.create('Doc', 'Brown', 'doc@brown.com', '')
+#Contact.create(first_name: 'Marty', last_name: 'McFly', email: 'marty@mcfly.com', note: 'back to the future!')
+#Contact.create('Marty', 'McFly', 'marty@mcfly.com', '')
+#Contact.create('George', 'McFly', 'george@mcfly.com', '')
+#Contact.create('Lorraine', 'McFly', 'lorraine@mcfly.com', '')
+#Contact.create('Biff', 'Tannen', 'biff@tannen.com', '')
+#Contact.create('Doc', 'Brown', 'doc@brown.com', '')
 
 get '/' do
   @crm_app_name = "Bitmaker CRM"
@@ -25,17 +26,22 @@ get '/new_contact' do
 end
 
 post '/contacts' do
-  Contact.create(params[:first_name], params[:last_name], params[:email], params[:note])
-  redirect to('/')
+  contact = Contact.create(
+  first_name: params[:first_name],
+  last_name: params[:last_name],
+  email: params[:email],
+  note: params[:note]
+  )
+  redirect to('/contacts')
 end
 
 get '/contacts/:id' do
   @contact = Contact.find(params[:id].to_i)
   if @contact
   erb :show_contact
-else
+  else
   raise Sinatra::NotFound
-end
+  end
 end
 
 get '/contacts/:id/edit' do
@@ -47,15 +53,15 @@ get '/contacts/:id/edit' do
   end
 end
 
-put '/contacts.:id' do
+put '/contacts/:id' do
   @contact = Contact.find(params[:id].to_i)
-  if @contact
-    @contact.first_name = params[:first_name]
-    @contact.last_name = params[:last_name]
-    @contact.email = params[:email]
-    @contact.note = params[:note]
-
-    redirect to('/contacts')
+    if @contact
+    @contact.update(
+    first_name: params[:first_name],
+    last_name: params[:last_name],
+    email: params[:email],
+    note: params[:note])
+      redirect to('/')
   else
     raise Sinatra::NotFound
   end
@@ -65,8 +71,12 @@ delete '/contacts/:id' do
   @contact = Contact.find(params[:id].to_i)
   if @contact
     @contact.delete
-    redirect to('/contacts')
+    redirect to('/')
   else
     raise Sinatra::NotFound
   end
+end
+
+after do
+  ActiveRecord::Base.connection.close
 end
